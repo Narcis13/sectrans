@@ -6,7 +6,7 @@
       <slot />
     </div>
     <IamFooter>
-      <p>&copy; 2022 My Company, Inc</p>
+      <p>&copy; 2023 Echipa IT Spitalul Militar Pitesti</p>
     </IamFooter>
   </div>
 </template>
