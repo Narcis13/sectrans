@@ -1,6 +1,6 @@
 <!-- This component displays an object as an input form -->
 <template>
-  <form class="mb-5" :style="`width: ${width}rem;`">
+  <form class="mt-5 mb-5" :style="`width: ${width}rem;`">
     <div class="mb-3">
       <div v-for="(item, index) in data" :key="index">
         <label v-if="item.label && item.show !== false" :for="item.label" class="form-label"><strong>{{ item.label }}</strong></label>
@@ -105,6 +105,9 @@ function submit() {
 </script>
 
 <style scoped>
+.mt-5 {
+  margin-top: 3rem;
+}
 .mb-5 {
   margin-bottom: 3rem;
 }
@@ -121,6 +124,21 @@ label {
   display: inline-block;
 }
 
+textarea {
+  width: 100%;
+  height:200px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
 .form-control {
   display: block;
   width: 100%;

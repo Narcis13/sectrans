@@ -1,24 +1,52 @@
 <template>
   <div v-if="isLoaded && isLoggedIn">
-    <h1>File Upload</h1>
+    <h2>Transfer fisier</h2>
     <form>
-      <label for="file">File: </label>
+      <label for="file">Fisier: </label>
       <input type="file" name="file" @change="onChange" />
     </form>
+    <NxForm :data="inputData" submit-text="Transmite" @submit="transmite" />
   </div>
 </template>
 
 <script setup lang="ts">
+import {Transfer,  NxFormInput } from "~~/iam/misc/types";
 const { isAuthenticated } = useIam();
 const isLoggedIn = ref(false);
 const isLoaded = ref(false);
+const {executaTransfer} = useTransfer();
+const inputData = [
+{
+    label: "Nume pacient",
+    id: "nume_pacient",
+    type: "input:text",
+  },
+  {
+    label: "Adresa Email",
+    id: "email",
+    type: "input:email",
+  },
+  {
+    label: "Mesaj",
+    id: "mesaj",
+    type: "textarea",
+  },
+] as Array<NxFormInput>;
+
+
+  async function transmite(transfer:Transfer){
+    console.log(transfer)
+    const { status, error } = await executaTransfer(transfer)
+     return;
+  }
 
 onMounted(async () => {
   isLoggedIn.value = await isAuthenticated();
   if (!isLoggedIn.value) navigateTo("iam/login");
   isLoaded.value = true;
 });
-const onChange = async (e) => {
+
+const onChange = async (e:any) => {
   const files = e.target.files;
   const formData = new FormData();
   formData.append('file', files[0]);
@@ -29,6 +57,6 @@ const onChange = async (e) => {
 };
 
 useHead({
-  title: "Sample protected page",
+  title: "Transfer fisiere",
 });
 </script>

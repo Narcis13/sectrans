@@ -17,6 +17,13 @@ export type User = {
   created_at: Date;
 };
 
+export type Transfer = {
+    nume_pacient: string;
+    email:string;
+    mesaj?:string;
+
+}
+
 export type ProviderUser = {
   id: number;
   provider: "GOOGLE";
