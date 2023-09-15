@@ -5,7 +5,7 @@
       <label for="file">Fisier: </label>
       <input type="file" name="file" @change="onChange" />
     </form>
-    <NxForm :data="inputData" submit-text="Transmite" @submit="transmite" />
+    <NxForm v-show="isUploaded" :data="inputData" submit-text="Transmite" @submit="transmite" />
   </div>
 </template>
 
@@ -14,6 +14,7 @@ import {Transfer,  NxFormInput } from "~~/iam/misc/types";
 const { isAuthenticated } = useIam();
 const isLoggedIn = ref(false);
 const isLoaded = ref(false);
+const isUploaded = ref(false)
 const {executaTransfer} = useTransfer();
 const inputData = [
 {
@@ -54,6 +55,7 @@ const onChange = async (e:any) => {
     method: 'post',
     body: formData,
   });
+  isUploaded.value=true
 };
 
 useHead({
