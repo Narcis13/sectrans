@@ -28,6 +28,18 @@ model users {
   provider_users provider_users[]
 }
 
+model transferuri {
+    id  Int @id @default(autoincrement())
+    numefisier  String @db.VarChar(255)
+    numepacient String? @db.VarChar(100)
+    adresaemail String  @db.VarChar(100)
+    mesaj String? @db.VarChar(1000)
+    dataincarcare DateTime @default(now()) @db.DateTime(0)
+    dataexpirare  DateTime?  @db.DateTime(0)
+    stare String @db.VarChar(20)
+    updated_at     DateTime?        @updatedAt
+}
+
 model provider_users {
   id               Int       @id @default(autoincrement())
   provider         Provider

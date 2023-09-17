@@ -21,8 +21,22 @@ export type Transfer = {
     nume_pacient: string;
     email:string;
     mesaj?:string;
+    numefiser?:string;
 
 }
+
+export type TransferFinalizat = {
+  id:number;
+  numepacient: string;
+  adresaemail:string;
+  mesaj?:string;
+  numefiser?:string;
+  stare:string;
+  dataincarcare:Date;
+  dataexpirare?:Date;
+  updated_at?:Date;
+
+} 
 
 export type ProviderUser = {
   id: number;

@@ -1,0 +1,40 @@
+//@version=4
+study("RSI Strategy", shorttitle="RSI Strategy", overlay=true)
+
+// Parameters
+overbought = 70
+oversold = 30
+rsi_period = 14
+min_duration = 4
+max_duration = 100
+
+// Calculate RSI
+rsi = rsi(close, rsi_period)
+
+// Check if RSI is overbought or oversold for the specified duration
+longOverbought = sum(rsi > overbought ? 1 : 0, max_duration) >= min_duration
+longOversold = sum(rsi < oversold ? 1 : 0, max_duration) >= min_duration
+
+// Generate signals
+buySignal = crossover(rsi, oversold) and longOversold
+sellSignal = crossunder(rsi, overbought) and longOverbought
+
+// Calculate RSI divergence
+priceDelta = close - close[1]
+rsiDelta = rsi - rsi[1]
+divergence = priceDelta * rsiDelta < 0
+
+strongBuySignal = buySignal and divergence
+strongSellSignal = sellSignal and divergence
+
+// Plotting
+plotshape(series=buySignal and not strongBuySignal, title="Buy Signal", location=location.belowbar, color=color.green, style=shape.labelup, text="Buy")
+plotshape(series=sellSignal and not strongSellSignal, title="Sell Signal", location=location.abovebar, color=color.red, style=shape.labeldown, text="Sell")
+
+plotshape(series=strongBuySignal, title="Strong Buy Signal", location=location.belowbar, color=color.green, style=shape.triangleup, text="Strong Buy")
+plotshape(series=strongSellSignal, title="Strong Sell Signal", location=location.abovebar, color=color.red, style=shape.triangledown, text="Strong Sell")
+
+// Plot RSI for reference
+//hline(overbought, "Overbought", color=color.red)
+//hline(oversold, "Oversold", color=color.green)
+//plot(rsi, "RSI", color=color.blue)

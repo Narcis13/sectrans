@@ -1,4 +1,4 @@
-import { JSONResponse, Transfer } from "~~/iam/misc/types";
+import { JSONResponse, TransferFinalizat } from "~~/iam/misc/types";
 
 export default function useTransfer(){
     return {
@@ -6,7 +6,7 @@ export default function useTransfer(){
     }
 }
 
-async function executaTransfer(t:Transfer): Promise<JSONResponse>{
+async function executaTransfer(t:TransferFinalizat): Promise<JSONResponse>{
     
     const response = await $fetch("/api/iam/exectransfer", {
         method: "POST",

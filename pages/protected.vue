@@ -10,21 +10,22 @@
 </template>
 
 <script setup lang="ts">
-import {Transfer,  NxFormInput } from "~~/iam/misc/types";
+import {TransferFinalizat,  NxFormInput } from "~~/iam/misc/types";
 const { isAuthenticated } = useIam();
 const isLoggedIn = ref(false);
 const isLoaded = ref(false);
+const numefisier = ref('')
 const isUploaded = ref(false)
 const {executaTransfer} = useTransfer();
 const inputData = [
 {
     label: "Nume pacient",
-    id: "nume_pacient",
+    id: "numepacient",
     type: "input:text",
   },
   {
     label: "Adresa Email",
-    id: "email",
+    id: "adresaemail",
     type: "input:email",
   },
   {
@@ -35,7 +36,9 @@ const inputData = [
 ] as Array<NxFormInput>;
 
 
-  async function transmite(transfer:Transfer){
+  async function transmite(transfer:TransferFinalizat){
+    transfer.numefiser=numefisier.value;
+    transfer.stare="incarcat"
     console.log(transfer)
     const { status, error } = await executaTransfer(transfer)
      return;
@@ -50,12 +53,14 @@ onMounted(async () => {
 const onChange = async (e:any) => {
   const files = e.target.files;
   const formData = new FormData();
+  console.log('fisier',files[0])
   formData.append('file', files[0]);
   await useFetch('/api/upload', {
     method: 'post',
     body: formData,
   });
   isUploaded.value=true
+  numefisier.value=files[0].name
 };
 
 useHead({
